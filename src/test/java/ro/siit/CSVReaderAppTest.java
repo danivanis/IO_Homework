@@ -4,7 +4,6 @@ import junit.framework.TestCase;
 import org.junit.Test;
 
 import java.io.*;
-import java.util.List;
 
 public class CSVReaderAppTest extends TestCase {
 
@@ -44,12 +43,20 @@ public class CSVReaderAppTest extends TestCase {
         assertEquals(athleteData[6], "xxoxo");
     }
 
+    public void testCalculatePenaltyTime() {
+        String shootingResults = "xxoox,xooxo,xxxxo";
+        char ch = 'o';
+        Integer penalties = (int) (shootingResults.chars().filter(c -> c == ch).count());
+        Integer totalPenaltyTime = penalties * 10;
+        assertTrue(totalPenaltyTime == 60);
+    }
+
     @Test
     public void testFormatDuration() {
 
         String minValue = "29";
         int secValue = 80;
         assertEquals(String.format("%02d:%02d", (Integer.parseInt(minValue) + secValue / 60), secValue % 60),"30:20");
-
     }
+
 }
