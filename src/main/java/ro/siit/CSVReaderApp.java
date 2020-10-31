@@ -4,7 +4,7 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.time.Duration;
+
 
 public class CSVReaderApp {
 
@@ -15,7 +15,6 @@ public class CSVReaderApp {
         String cvsSplitBy = ",";
         String timeSplit = ":";
         int lineNumber = 0;
-        int seconds = 0;
 
         try {
             bufferedReader = new BufferedReader(new FileReader(csvFile));
@@ -27,12 +26,20 @@ public class CSVReaderApp {
                 }
                 lineNumber++;
                 String[] athleteData = line.split(cvsSplitBy);
-//                System.out.println("Athlete " + athleteData[1] + " with the number " + athleteData[0] +
-//                        " from country " + athleteData[2] + " and has a ski time result of " + athleteData[3]);
+
+                System.out.println("*******************************************");
+
+                System.out.println("Athlete " + athleteData[1] + " with the number " + athleteData[0] +
+                        ", from country " + athleteData[2] + " and has a ski time result of " + athleteData[3]);
+                System.out.println("After shooting tryouts the results are as following:");
+
 
                 String[] time = athleteData[3].split(timeSplit);
 
-                System.out.println(time[0]);
+                System.out.println("Athlete " + athleteData[1] + " with the number " + athleteData[0] +
+                        ", from country " + athleteData[2] + " has now a ski time result of " +
+                        formatDuration(time[0], Integer.parseInt(time[1]) +
+                                calculatePenaltyTime(athleteData[4] + athleteData[5] + athleteData[6])));
             }
 
         } catch (FileNotFoundException e) {
@@ -50,4 +57,14 @@ public class CSVReaderApp {
         }
     }
 
+    public static Integer calculatePenaltyTime(String shootingResults) {
+        char ch = 'o';
+        Integer penalties = (int) (shootingResults.chars().filter(c -> c == ch).count());
+        Integer totalPenaltyTime = penalties * 10;
+        return totalPenaltyTime;
+    }
+
+    public static String formatDuration(String minValue, int secValue) {
+        return String.format("%02d:%02d", (Integer.parseInt(minValue) + secValue / 60), secValue % 60);
+    }
 }
