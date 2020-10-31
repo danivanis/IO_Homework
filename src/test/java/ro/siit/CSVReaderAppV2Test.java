@@ -5,7 +5,7 @@ import org.junit.Test;
 
 import java.io.*;
 
-public class CSVReaderAppTest extends TestCase {
+public class CSVReaderAppV2Test extends TestCase {
 
     @Test
     public void testGetFile(){
